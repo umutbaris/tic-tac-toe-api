@@ -137,13 +137,13 @@ class Api extends Controller
 
 			return false;
 		} 
-		// else if ( $request['gamer1'] === 1 ){
-		// 		$request['gamer1'] = 0;
-		// 		$request['gamer2'] = 1;
-		// 	} else {
-		// 		$request['gamer1'] = 1;
-		// 		$request['gamer2'] = 0;
-		// 	}
+		else if ( $request['gamer1'] === 1 ){
+				$request['gamer1'] = 0;
+				$request['gamer2'] = 1;
+			} else {
+				$request['gamer1'] = 1;
+				$request['gamer2'] = 0;
+			}
 
 		return $request;
 	}
