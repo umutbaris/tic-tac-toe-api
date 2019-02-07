@@ -27,9 +27,9 @@ class Api extends Controller
 	{
 		$request["gamer1"] = 1;
 		$request["gamer2"] = 0;
-		$request["game_status"] = "playing";
+
 		$game = Game::create( $request->all() );
-		return response()->json( $game, 201 ); 
+		return response()->json( $game, 201 );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class Api extends Controller
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Http\Request $request
 	 * @param  int  $game
 	 * @return \Illuminate\Http\Response
 	 */
@@ -68,9 +68,10 @@ class Api extends Controller
 			if ( $result === false ) {
 				return response()->json( $game, 200 );
 			} else {
-			//	$request["game_status"] = "finish";
+				$request["game_status"] = "finish";
+				$request['winner'] = $result;
 				$game->update( $request->all());
-				return response()->json( $result . " " . "WON"   , 200 );
+				return response()->json( $result . " " . "WON", 200 );
 			}
 
 		}
@@ -88,6 +89,14 @@ class Api extends Controller
 		return response()->json( null, 204 );
 	}
 
+	/**
+	 * Checking some player is won. If there is a winner it is return winner value
+	 * as X or O
+	 *
+	 * @param Request $request
+	 * @param Game $game
+	 * @return void
+	 */
 	public function check_won_case( Request $request, Game $game ) {
 		// $win = [ 
 		// 	[a1, a2, a3], // Check first row. 
@@ -182,12 +191,20 @@ class Api extends Controller
 	}
 
 	/**
-	 * Undocumented function
+	 * If someone won the game game status is coming as finish. This method checking all 
+	 * places are empty or not. If there is no empty place it is updating game status as 
+	 * finish.
 	 *
 	 * @param Game $game
 	 * @return boolean
 	 */
 	public function is_finish ( Game $game ) {
+		foreach ( $game as $column ) {
+			if ( !empty($column) ) {
+				$game["game_status"] == "finish";
+				$request['winner'] = "draw";
+			}
+		}
 		if ( $game["game_status"] == "finish" ) {
 			return true;
 		} else {
