@@ -31,7 +31,7 @@ localhost/api/game
 http://ec2-34-246-174-181.eu-west-1.compute.amazonaws.com/api/game ( Instance generally closed )
 
 
-**Reguests**
+**Requests**
 
 | Method | URL            | Header Key    | Header Value     |
 | -------|----------------|---------------|----------------- |
